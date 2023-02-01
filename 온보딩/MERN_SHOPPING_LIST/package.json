@@ -1,0 +1,21 @@
+{
+  "name": "mern_shopping_list",
+  "version": "1.0.0",
+  "description": "shopping list built with the MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "author": "Jimin",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "concurrently": "^7.6.0",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
