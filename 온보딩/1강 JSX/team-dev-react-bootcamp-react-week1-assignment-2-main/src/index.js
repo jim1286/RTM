@@ -60,14 +60,14 @@ function render({ total, sign, currentNum, check }) {
   };
 
   const handleClickOperator = (oper) => {
-    if (sign)
-      render({
-        total: calculate(total, currentNum, sign),
-        sign: oper,
-        currentNum: 0,
-        check: true,
-      });
-    else render({ total, sign: oper, currentNum: 0, check });
+    sign
+      ? render({
+          total: calculate(total, currentNum, sign),
+          sign: oper,
+          currentNum: 0,
+          check: true,
+        })
+      : render({ total, sign: oper, currentNum: 0, check });
   };
 
   const element = (
