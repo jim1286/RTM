@@ -31,15 +31,13 @@ const initalState = {
 };
 
 const calculate = (x, y, sign) => {
-  let cal;
-  sign === "+"
-    ? (cal = x + y)
+  return sign === "+"
+    ? x + y
     : sign === "-"
-    ? (cal = x - y)
+    ? x - y
     : sign === "*"
-    ? (cal = x * y)
-    : (cal = x / y);
-  return cal;
+    ? x * y
+    : x / y;
 };
 
 function render({ total, sign, currentNum, check }) {
