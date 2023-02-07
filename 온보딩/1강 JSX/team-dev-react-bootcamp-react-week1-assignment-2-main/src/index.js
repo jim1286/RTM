@@ -20,65 +20,62 @@ function createElement(tagName, props, ...children) {
   return element;
 }
 
-
 const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-const operators = ['+', '-', '*', '/', '='];
+const operators = ["+", "-", "*", "/", "="];
 
-function or(x, y) {
-  return x === null ? y : x;
-}
-
-const operatorFunctions = {
-  '+': (x, y) => x + y,
-  '-': (x, y) => x - y,
-  '*': (x, y) => x * y,
-  '/': (x, y) => x / y,
+const initalState = {
+  total: 0,
+  sign: "",
+  currentNum: 0,
+  check: false,
 };
 
-function defaultFunction(x, y) {
-  return or(y, x);
-}
-
-function calculate(currentOperator, accumulatedNumber, currentNumber) {
-  return (operatorFunctions[currentOperator] || defaultFunction)(
-    accumulatedNumber,
-    currentNumber,
-  );
-}
-
-const initialState = {
-  accumulatedNumber: 0,
-  currentNumber: null,
-  currentOperator: '',
+const calculate = (x, y, sign) => {
+  let cal;
+  sign === "+"
+    ? (cal = x + y)
+    : sign === "-"
+    ? (cal = x - y)
+    : sign === "*"
+    ? (cal = x * y)
+    : (cal = x / y);
+  return cal;
 };
 
-function render({ accumulatedNumber, currentNumber, currentOperator }) {
-  console.log(accumulatedNumber, currentNumber, currentOperator)
+function render({ total, sign, currentNum, check }) {
+  console.log(total, sign, currentNum, check);
 
-  function handleClickNumber(clickedNumber) {
-    render({
-      accumulatedNumber,
-      currentNumber: (currentNumber || 0) * 10 + clickedNumber,
-      currentOperator,
-    });
-  }
+  const handleClickNumber = (num) => {
+    !sign
+      ? render({
+          total: total * 10 + num,
+          sign,
+          currentNum: currentNum * 10 + num,
+          check,
+        })
+      : render({
+          total,
+          sign,
+          currentNum: currentNum * 10 + num,
+          check: false,
+        });
+  };
 
-  function handleClickOperator(clickedOperator) {
-    render({
-      accumulatedNumber: calculate(
-        currentOperator,
-        accumulatedNumber,
-        currentNumber,
-      ),
-      currentNumber: null,
-      currentOperator: clickedOperator,
-    });
-  }
-  
+  const handleClickOperator = (oper) => {
+    if (sign)
+      render({
+        total: calculate(total, currentNum, sign),
+        sign: oper,
+        currentNum: 0,
+        check: true,
+      });
+    else render({ total, sign: oper, currentNum: 0, check });
+  };
+
   const element = (
     <div>
       <p>간단 계산기</p>
-      <p>{or(currentNumber, accumulatedNumber)}</p>
+      <p>{check ? total : currentNum}</p>
       <div>
         {numbers.map((number) => (
           <button type="button" onClick={() => handleClickNumber(number)}>
@@ -96,8 +93,8 @@ function render({ accumulatedNumber, currentNumber, currentOperator }) {
     </div>
   );
 
-  document.getElementById('app').textContent = '';
-  document.getElementById('app').appendChild(element);
+  document.getElementById("app").textContent = "";
+  document.getElementById("app").appendChild(element);
 }
 
-render(initialState);
+render(initalState);
